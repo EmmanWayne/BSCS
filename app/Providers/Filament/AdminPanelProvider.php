@@ -7,6 +7,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
+use Filament\Pages\Auth\Login;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -25,8 +26,12 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
-            ->login()
+            ->path('')
+            ->login(Login::class)
+            ->topNavigation()
+            ->brandName(config('app.name'))
+            ->brandLogo(asset('/images/logo.png'))
+            ->brandLogoHeight(fn() => \Illuminate\Support\Facades\Auth::check() ? '3.5rem' : '12rem')
             ->colors([
                 'primary' => Color::Amber,
             ])
